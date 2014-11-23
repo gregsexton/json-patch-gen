@@ -113,10 +113,49 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner/something', value: 8 });
     });
 
-    // TODO: moves
-    // TODO: json patch escaping
-
     // TODO: arrays
+    it('should support a single top-level remove in an array leaving it empty', function(){
+    });
+
+    it('should support a single top-level add to an empty array', function(){
+    });
+
+    it('should support an add at the beginning of an array', function(){
+    });
+
+    it('should support an add at the end of an array', function(){
+    });
+
+    it('should support an add in the middle of an array', function(){
+    });
+
+    it('should support a remove at the beginning of an array', function(){
+    });
+
+    it('should support a remove at the end of an array', function(){
+    });
+
+    it('should support a remove in the middle of an array', function(){
+    });
+
+    it('should support a replace at the beginning of an array', function(){
+    });
+
+    it('should support a replace at the end of an array', function(){
+    });
+
+    it('should support a replace in the middle of an array', function(){
+    });
+
+    it('should support an add, remove and replace from different areas of an array', function(){
+    });
+
+    it('should support comparing an array at a nested level', function(){
+    });
+
+    // TODO: works with json parsed objects
+
+    // TODO: json pointer escaping
 
     // TODO: use quick check
 });
