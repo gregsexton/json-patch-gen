@@ -44,10 +44,6 @@ describe('#diff()', function() {
         expect(function() {
             diff.diff(obj1, obj2);
         }).to.throw(/valid JSON value/);
-
-        expect(function() {
-            diff.diff(obj2, obj1);
-        }).to.throw(/valid JSON value/);
     });
 
     it('should support comparing empty objects', function(){
@@ -79,8 +75,44 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/nested/baz/key', value: 'value' });
     });
 
-    // TODO: removes
-    // TODO: changes
+    it('should support single a top-level remove', function(){
+        var obj1 = {foo: 'bar'},
+            obj2 = {};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/foo' });
+    });
+
+    it('should support multiple top-level removes', function(){
+        var obj1 = {foo: 'bar', baz: 5},
+            obj2 = {};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/foo' });
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/baz' });
+    });
+
+    it('should support nested object removes', function(){
+        var obj1 = {nested: {inner: {something: 5}}},
+            obj2 = {nested: {inner: {}}};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/nested/inner/something' });
+    });
+
+    it('should support a single top-level replace', function(){
+        var obj1 = {foo: 'bar'},
+            obj2 = {foo: 'baz'};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/foo', value: 'baz' });
+    });
+
+    it('should support multiple top-level replaces', function(){
+        var obj1 = {foo: 'bar', baz: 5},
+            obj2 = {foo: 'baz', baz: 8};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/foo', value: 'baz' });
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/baz', value: 8 });
+    });
+
+    it('should support nested object replaces', function(){
+        var obj1 = {nested: {inner: {something: 5}}},
+            obj2 = {nested: {inner: {something: 8}}};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner/something', value: 8 });
+    });
+
     // TODO: moves
     // TODO: json patch escaping
 
