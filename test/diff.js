@@ -113,31 +113,8 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner/something', value: 8 });
     });
 
-    it('should support moves at the top-level', function(){
-        var obj1 = {foo: 'bar'},
-            obj2 = {baz: 'bar'};
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'move', from: '/foo', path: '/baz' });
-    });
-
-    it('should support multiple moves', function(){
-        var obj1 = {foo: 'bar', bar: 5},
-            obj2 = {baz: 'bar', quux: 5};
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'move', from: '/foo', path: '/baz' });
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'move', from: '/bar', path: '/quux' });
-    });
-
-    it('should support moves at the same level of nesting', function(){
-        var obj1 = {foo: {bar: 'baz'}},
-            obj2 = {foo: {baz: 'baz'}};
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'move', from: '/foo/bar', path: '/foo/baz' });
-    });
-
-    it('should use a separate add and remove for differing levels', function(){
-        var obj1 = {foo: {bar: 'baz'}},
-            obj2 = {quux: 'baz'};
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/foo' });
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/quux', value: 'baz' });
-    });
+    // TODO: moves
+    // TODO: json patch escaping
 
     // TODO: arrays
 
