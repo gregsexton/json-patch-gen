@@ -1,5 +1,4 @@
-/*global require, describe, it*/
-
+/*global require, it, describe*/
 var diff = require('../lib/diff');
 var chai = require('chai');
 var expect = chai.expect;

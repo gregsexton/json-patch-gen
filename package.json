@@ -1,16 +1,19 @@
 {
-  "name": "diff",
+  "name": "json-patch-gen",
   "version": "1.0.0",
-  "description": "Generate json-patch documents",
+  "description": "JavaScript library that generates JSON patches (RFC 6902)",
   "main": "./lib/diff.js",
   "scripts": {
-    "test": "mocha -C"
+    "test": "mocha"
   },
   "keywords": [
-    "json-patch"
+      "json-patch",
+      "diff",
+      "rfc 6902",
+      "generate"
   ],
   "author": "Greg Sexton",
-  "license": "Apache",
+  "license": "Apache 2.0",
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.0.1"
