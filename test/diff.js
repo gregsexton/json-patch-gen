@@ -114,44 +114,99 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner/something', value: 8 });
     });
 
-    // TODO: arrays
     it('should support a single top-level remove in an array leaving it empty', function(){
+        var obj1 = ['foo'],
+            obj2 = [];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/0' });
     });
 
     it('should support a single top-level add to an empty array', function(){
+        var obj1 = [],
+            obj2 = ['foo'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0', value: 'foo' });
     });
 
     it('should support an add at the beginning of an array', function(){
+        var obj1 = ['foo'],
+            obj2 = ['bar', 'foo'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0', value: 'bar' });
     });
 
     it('should support an add at the end of an array', function(){
+        var obj1 = ['foo'],
+            obj2 = ['foo', 'bar'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/1', value: 'bar' });
     });
 
     it('should support an add in the middle of an array', function(){
+        var obj1 = ['foo', 'baz'],
+            obj2 = ['foo', 'bar', 'baz'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/1', value: 'bar' });
     });
 
     it('should support a remove at the beginning of an array', function(){
+        var obj1 = ['bar', 'foo'],
+            obj2 = ['foo'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/0' });
     });
 
     it('should support a remove at the end of an array', function(){
+        var obj1 = ['foo', 'bar'],
+            obj2 = ['foo'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/1' });
     });
 
     it('should support a remove in the middle of an array', function(){
+        var obj1 = ['foo', 'bar', 'baz'],
+            obj2 = ['foo', 'baz'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'remove', path: '/1' });
     });
 
     it('should support a replace at the beginning of an array', function(){
+        var obj1 = ['foo', 'bar'],
+            obj2 = ['baz', 'bar'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/0', value: 'baz' });
     });
 
     it('should support a replace at the end of an array', function(){
+        var obj1 = ['foo', 'bar'],
+            obj2 = ['foo', 'baz'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/1', value: 'baz' });
     });
 
     it('should support a replace in the middle of an array', function(){
+        var obj1 = ['foo', 'bar', 'baz'],
+            obj2 = ['foo', 'quux', 'baz'];
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/1', value: 'quux' });
     });
 
     it('should support an add, remove and replace from different areas of an array', function(){
+        var obj1 = [1,2,3,4,5,6,7,8,9,0],
+            obj2 = [1,3,4,5,11,7,8,9,44,0];
+        expect(diff.diff(obj1, obj2)).to.deep.equal([{ op: 'add', path: '/9', value: 44 },
+                                                     { op: 'replace', path: '/5', value: 11 },
+                                                     { op: 'remove', path: '/1' }]);
     });
 
-    it('should support comparing an array at a nested level', function(){
+    // TODO:
+    it('should support comparing an array nested in an object', function(){
+    });
+
+    // TODO:
+    it('should support comparing an array nested within an array', function(){
+    });
+
+    // TODO:
+    it('should support comparing an object nested in an array', function(){
+        // only when the diff indicates a replace should we look in to
+        // the object being replaced
+    });
+
+    it('should support comparing an array to an object', function(){
+        var obj1 = [],
+            obj2 = {};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/', value: {} });
+        expect(diff.diff(obj2, obj1)).to.contain({ op: 'replace', path: '/', value: [] });
     });
 
     // TODO: works with json parsed objects
