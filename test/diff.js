@@ -188,18 +188,25 @@ describe('#diff()', function() {
                                                      { op: 'remove', path: '/1' }]);
     });
 
-    // TODO:
     it('should support comparing an array nested in an object', function(){
+        var obj1 = {foo: {bar: [1,2,3]}},
+            obj2 = {foo: {bar: [2,3,4]}};
+        expect(diff.diff(obj1, obj2)).to.deep.equal([{ op: 'add', path: '/foo/bar/3', value: 4 },
+                                                     { op: 'remove', path: '/foo/bar/0' }]);
     });
 
-    // TODO:
     it('should support comparing an array nested within an array', function(){
+        var obj1 = {foo: {bar: [1,[],3]}},
+            obj2 = {foo: {bar: [1,[2],3]}};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/foo/bar/1/0', value: 2 });
     });
 
-    // TODO:
     it('should support comparing an object nested in an array', function(){
-        // only when the diff indicates a replace should we look in to
-        // the object being replaced
+        var obj1 = [{foo: {bar: [1,[],3]}}],
+            obj2 = [{foo: {bar: [1,[2],3]}, baz: 3}];
+        console.log(diff.diff(obj1, obj2));
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0/foo/bar/1/0', value: 2 });
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0/baz', value: 3 });
     });
 
     it('should support comparing an array to an object', function(){
@@ -209,7 +216,11 @@ describe('#diff()', function() {
         expect(diff.diff(obj2, obj1)).to.contain({ op: 'replace', path: '/', value: [] });
     });
 
-    // TODO: works with json parsed objects
+    it('should support json parsed objects', function(){
+        var obj1 = JSON.parse("{\"foo\": \"bar\"}"),
+            obj2 = JSON.parse("{\"foo\": \"baz\"}");
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/foo', value: 'baz' });
+    });
 
     // TODO: json pointer escaping
 
