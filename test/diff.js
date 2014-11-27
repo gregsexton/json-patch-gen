@@ -204,7 +204,6 @@ describe('#diff()', function() {
     it('should support comparing an object nested in an array', function(){
         var obj1 = [{foo: {bar: [1,[],3]}}],
             obj2 = [{foo: {bar: [1,[2],3]}, baz: 3}];
-        console.log(diff.diff(obj1, obj2));
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0/foo/bar/1/0', value: 2 });
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'add', path: '/0/baz', value: 3 });
     });
@@ -212,8 +211,8 @@ describe('#diff()', function() {
     it('should support comparing an array to an object', function(){
         var obj1 = [],
             obj2 = {};
-        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/', value: {} });
-        expect(diff.diff(obj2, obj1)).to.contain({ op: 'replace', path: '/', value: [] });
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '', value: {} });
+        expect(diff.diff(obj2, obj1)).to.contain({ op: 'replace', path: '', value: [] });
     });
 
     it('should support json parsed objects', function(){
@@ -222,7 +221,17 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/foo', value: 'baz' });
     });
 
-    // TODO: json pointer escaping
+    it('should support escaping a forward slash in the path', function(){
+        var obj1 = {'a/b': 'val'},
+            obj2 = {'a/b': 'new-val'};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/a~1b', value: 'new-val' });
+    });
+
+    it('should support escaping a tilde in the path', function(){
+        var obj1 = {'a~b': 'val'},
+            obj2 = {'a~b': 'new-val'};
+        expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/a~0b', value: 'new-val' });
+    });
 
     // TODO: use quick check
 });
