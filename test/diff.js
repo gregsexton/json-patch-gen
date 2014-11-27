@@ -216,8 +216,8 @@ describe('#diff()', function() {
     });
 
     it('should support json parsed objects', function(){
-        var obj1 = JSON.parse("{\"foo\": \"bar\"}"),
-            obj2 = JSON.parse("{\"foo\": \"baz\"}");
+        var obj1 = JSON.parse('{"foo": "bar"}'),
+            obj2 = JSON.parse('{"foo": "baz"}');
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/foo', value: 'baz' });
     });
 
