@@ -1,7 +1,9 @@
 /*global require, it, describe*/
-var diff = require('../lib/diff');
-var chai = require('chai');
-var expect = chai.expect;
+var diff = require('../lib/diff'),
+    expect = require('chai').expect,
+    jsc = require('jsverify'),
+    patch = require('jsonpatch'),
+    _ = require('underscore');
 
 describe('#diff()', function() {
     'use strict';
@@ -233,5 +235,33 @@ describe('#diff()', function() {
         expect(diff.diff(obj1, obj2)).to.contain({ op: 'replace', path: '/a~0b', value: 'new-val' });
     });
 
-    // TODO: use quick check
+    it('should support randomly generated objects', function(){
+        var appliedPatchEqualsOriginal =
+                jsc.forall('map(json)', 'map(json)', function( obj1, obj2 ) {
+                    var p = diff.diff(obj1, obj2);
+                    // console.log('p: ' + JSON.stringify(p, null, 4));
+
+                    var patched = patch.apply_patch(obj1, p);
+                    // console.log('patched: ' + JSON.stringify(patched, null, 4));
+
+                    return _.isEqual(obj2, patched);
+                });
+
+        jsc.assert(appliedPatchEqualsOriginal);
+    });
+
+    it('should support randomly generated arrays', function(){
+        var appliedPatchEqualsOriginal =
+                jsc.forall('array(json)', 'array(json)', function( obj1, obj2 ) {
+                    var p = diff.diff(obj1, obj2);
+                    // console.log('p: ' + JSON.stringify(p, null, 4));
+
+                    var patched = patch.apply_patch(obj1, p);
+                    // console.log('patched: ' + JSON.stringify(patched, null, 4));
+
+                    return _.isEqual(obj2, patched);
+                });
+
+        jsc.assert(appliedPatchEqualsOriginal);
+    });
 });

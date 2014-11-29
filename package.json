@@ -7,15 +7,18 @@
     "test": "mocha"
   },
   "keywords": [
-      "json-patch",
-      "diff",
-      "rfc 6902",
-      "generate"
+    "json-patch",
+    "diff",
+    "rfc 6902",
+    "generate"
   ],
   "author": "Greg Sexton",
   "license": "Apache 2.0",
   "devDependencies": {
     "chai": "^1.10.0",
-    "mocha": "^2.0.1"
+    "jsonpatch": "^1.0.1",
+    "jsverify": "^0.4.5",
+    "mocha": "^2.0.1",
+    "underscore": "^1.7.0"
   }
 }
