@@ -29,6 +29,10 @@ given.
 
     npm install json-patch-gen --save
 
+or
+
+    bower install json-patch-gen
+
 Once installed, the module exports a single function that takes two
 values to diff.
 
