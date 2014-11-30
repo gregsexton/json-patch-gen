@@ -1,6 +1,6 @@
 {
   "name": "json-patch-gen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JavaScript library that generates JSON patches (RFC 6902)",
   "main": "./lib/diff.js",
   "scripts": {
