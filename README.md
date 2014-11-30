@@ -13,7 +13,7 @@ that can perform this for you:
 * [jsonpatch](https://www.npmjs.org/package/jsonpatch)
 * [jsonpatch-js](https://github.com/bruth/jsonpatch-js)
 * [fast-json-patch](https://github.com/Starcounter-Jack/Fast-JSON-Patch)
-* [rfc6902](https://www.npmjs.org/package/rfc6902)
+* [rfc6902][rfcproj]
 
 If you wish to modify an object and then generate a patch from the
 modifications just performed, [this library] [starcounter] may work
@@ -21,9 +21,16 @@ better for you. It uses an observer to achieve this. Json-patch-gen
 takes a different approach: it recursively compares the two values
 given.
 
+It appears that [rfc6902][rfcproj] can also generate patches. I missed
+this while researching a solution to this problem. I've not compared
+the projects. There is room for different approaches to generating
+patches so I suggest trying both libraries to see which works better
+for you.
+
 [tests]: https://github.com/gregsexton/json-patch-gen/blob/master/test/diff.js
 [rfc6902]: https://tools.ietf.org/html/rfc6902
 [starcounter]: https://github.com/Starcounter-Jack/Fast-JSON-Patch
+[rfcproj]: https://www.npmjs.org/package/rfc6902
 
 ## Installation
 
