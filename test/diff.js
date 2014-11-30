@@ -1,4 +1,5 @@
 /*global require, it, describe*/
+
 var diff = require('../lib/diff'),
     expect = require('chai').expect,
     jsc = require('jsverify'),
