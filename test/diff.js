@@ -116,6 +116,18 @@ describe('#diff()', function() {
             obj2 = {nested: {inner: {something: 8}}};
         expect(diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner/something', value: 8 });
     });
+    
+    it('should support nested replaces of null', function(){
+        var obj1 = {nested: {inner: null}},
+            obj2 = {nested: {inner: {something: 8}}};
+        expect(diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner', value: {something: 8} });
+    });
+    
+    it('should support nested replaces by null', function(){
+        var obj1 = {nested: {inner: {something: 5}}},
+            obj2 = {nested: {inner: null}};
+        expect(diff(obj1, obj2)).to.contain({ op: 'replace', path: '/nested/inner', value: null });
+    });
 
     it('should support a single top-level remove in an array leaving it empty', function(){
         var obj1 = ['foo'],
